@@ -43,9 +43,9 @@ Route::group(['prefix' => 'v1'], function () {
         Route::group([
             'prefix' => 'staff/delivery'
         ], function ($router) {
-            Route::get('', [DeliveryManController::class, 'index']);
-            Route::get('all', [DeliveryManController::class, 'all'])->middleware(['auth:api']);
-            Route::get('/{id}', [DeliveryManController::class, 'show']);
+            Route::get('', [DeliveryManController::class, 'index'])->middleware(['auth:api', 'scope:administrador']);
+            Route::get('all', [DeliveryManController::class, 'all'])->middleware(['auth:api', 'scope:administrador']);
+            Route::get('/{id}', [DeliveryManController::class, 'show'])->middleware(['auth:api', 'scope:administrador']);
         });
 
 
@@ -53,14 +53,14 @@ Route::group(['prefix' => 'v1'], function () {
         Route::group([
             'prefix' => 'order'
         ], function ($router) {
-            Route::get('', [OrderController::class, 'index']);
-            Route::get('all', [OrderController::class, 'all'])->middleware(['auth:api', 'scopes:administrador']);
-            Route::get('/{id}', [OrderController::class, 'show']);
+            Route::get('', [OrderController::class, 'index'])->middleware(['auth:api', 'scope:administrador,vendedor']);
+            Route::get('all', [OrderController::class, 'all'])->middleware(['auth:api', 'scope:administrador,vendedor']);
+            Route::get('/{id}', [OrderController::class, 'show'])->middleware(['auth:api', 'scope:administrador,vendedor']);
         });
 
         //Rutas principales Productos
-        Route::get('', [ProductController::class, 'index']);
-        Route::get('all', [ProductController::class, 'all']);
-        Route::get('/{id}', [ProductController::class, 'show']);
+        Route::get('', [ProductController::class, 'index'])->middleware(['auth:api', 'scope:administrador,vendedor']);
+        Route::get('all', [ProductController::class, 'all'])->middleware(['auth:api', 'scope:administrador,vendedor']);
+        Route::get('/{id}', [ProductController::class, 'show'])->middleware(['auth:api', 'scope:administrador,vendedor']);
     });
 });

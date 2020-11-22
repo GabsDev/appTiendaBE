@@ -27,7 +27,7 @@ class RolSeeder extends Seeder
 
         // $id=3
         $rol = new \App\Models\Rol();
-        $rol->name = 'ventas';
+        $rol->name = 'vendedor';
         $rol->description = 'salesman';
         $rol->save();
     }
