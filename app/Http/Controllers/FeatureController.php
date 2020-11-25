@@ -14,7 +14,14 @@ class FeatureController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $features = Feature::all();
+            $response = $features;
+
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -44,9 +51,16 @@ class FeatureController extends Controller
      * @param  \App\Models\Feature  $feature
      * @return \Illuminate\Http\Response
      */
-    public function show(Feature $feature)
+    public function show($id)
     {
-        //
+        try {
+            //Obtener un genero
+            $features = Feature::where('id', $id)->first();
+            $response = $features;
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -67,9 +81,31 @@ class FeatureController extends Controller
      * @param  \App\Models\Feature  $feature
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Feature $feature)
+    public function update(Request $request, $id)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:3',
+        ]);
+        //Retornar mensajes de validación
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 422);
+        }
+
+        //Datos del genero
+        $feature = Feature::find($id);
+        $feature->name = $request->input('name');
+        //Actualizar genero
+        if ($feature->update()) {
+
+            $response = 'Feature actualizado!';
+            return response()->json($response, 200);
+        }
+        $response = [
+            'msg' => 'Error durante la actualización'
+        ];
+
+        return response()->json($response, 404);
     }
 
     /**

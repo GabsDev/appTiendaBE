@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DeliveryMan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DeliveryManController extends Controller
 {
@@ -42,16 +43,6 @@ class DeliveryManController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -59,7 +50,50 @@ class DeliveryManController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /* Request entradas del formulario enviadas,
+            debe establecer las entradas requeridas para crear el prodcuto
+         */
+        //Especificar las reglas de validación para los campos del videojuego
+        //https://laravel.com/docs/8.x/validation#available-validation-rules
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'fullName' => 'required|string|min:10',
+                'idCard' => 'required|numeric|min:7',
+                'telephone' => 'required|numeric|min:7',
+                'email' => 'required|email',
+                'enable' => 'required|boolean'
+
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 422);
+        }
+        try {
+            //Instancia
+            $deliveryMan = new DeliveryMan();
+            $deliveryMan->fullName = $request->input('fullName');
+            $deliveryMan->idCard = $request->input('idCard');
+            $deliveryMan->telephone = $request->input('telephone');
+            $deliveryMan->email = $request->input('email');
+            $deliveryMan->enable = $request->input('enable');
+            $deliveryMan->vehicle_id = $request->input('vehicle_id');
+
+
+
+            //Guardar el videojuego en la BD
+            if ($deliveryMan->save()) {
+                $response = 'Personal de entrega creado!';
+                return response()->json($response, 201);
+            } else {
+                $response = [
+                    'msg' => 'Error durante la creación'
+                ];
+                return response()->json($response, 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -88,7 +122,6 @@ class DeliveryManController extends Controller
      */
     public function edit(DeliveryMan $deliveryMan)
     {
-        //
     }
 
     /**
@@ -98,9 +131,50 @@ class DeliveryManController extends Controller
      * @param  \App\Models\DeliveryMan  $deliveryMan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DeliveryMan $deliveryMan)
+    public function update(Request $request, $id)
     {
-        //
+        /* Request entradas del formulario enviadas,
+            debe establecer las entradas requeridas para crear el prodcuto
+         */
+        //Especificar las reglas de validación para los campos del videojuego
+        //https://laravel.com/docs/8.x/validation#available-validation-rules
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'fullName' => 'required|string|min:10',
+                'idCard' => 'required|numeric|min:7',
+                'telephone' => 'required|numeric|min:7',
+                'email' => 'required|email',
+                'enable' => 'required|boolean'
+
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 422);
+        }
+        try {
+            //Instancia
+            $deliveryMan = DeliveryMan::find($id);
+            $deliveryMan->fullName = $request->input('fullName');
+            $deliveryMan->idCard = $request->input('idCard');
+            $deliveryMan->telephone = $request->input('telephone');
+            $deliveryMan->email = $request->input('email');
+            $deliveryMan->enable = $request->input('enable');
+            $deliveryMan->vehicle_id = $request->input('vehicle_id');
+
+            //Guardar el videojuego en la BD
+            if ($deliveryMan->save()) {
+                $response = 'Personal de entrega actualizado!';
+                return response()->json($response, 201);
+            } else {
+                $response = [
+                    'msg' => 'Error durante la creación'
+                ];
+                return response()->json($response, 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

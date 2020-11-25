@@ -17,7 +17,6 @@ class CreateProductTypesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('image')->nullable();
             #created_at    updadted_at
             $table->timestamps();
         });

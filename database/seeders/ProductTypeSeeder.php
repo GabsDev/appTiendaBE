@@ -14,45 +14,45 @@ class ProductTypeSeeder extends Seeder
     public function run()
     {
         //1
-        $objetoUsuario = \App\Models\ProductType::create([
+        $tipoProducto = \App\Models\ProductType::create([
             'name' => 'shampoo',
             'description' => 'shampoo',
         ]);
-        $objetoUsuario->save();
+        $tipoProducto->save();
 
         //2
-        $objetoUsuario = \App\Models\ProductType::create([
+        $tipoProducto = \App\Models\ProductType::create([
             'name' => 'acondicionador',
             'description' => 'acondicionador',
         ]);
-        $objetoUsuario->save();
+        $tipoProducto->save();
 
         //3
-        $objetoUsuario = \App\Models\ProductType::create([
+        $tipoProducto = \App\Models\ProductType::create([
             'name' => 'keratina',
             'description' => 'keratina',
         ]);
-        $objetoUsuario->save();
+        $tipoProducto->save();
 
         //4
-        $objetoUsuario = \App\Models\ProductType::create([
+        $tipoProducto = \App\Models\ProductType::create([
             'name' => 'servicio',
             'description' => 'servicion',
         ]);
-        $objetoUsuario->save();
+        $tipoProducto->save();
 
         //5
-        $objetoUsuario = \App\Models\ProductType::create([
+        $tipoProducto = \App\Models\ProductType::create([
             'name' => 'Crema hidratante',
             'description' => 'Crema hidratante',
         ]);
-        $objetoUsuario->save();
+        $tipoProducto->save();
 
         //6
-        $objetoUsuario = \App\Models\ProductType::create([
+        $tipoProducto = \App\Models\ProductType::create([
             'name' => 'Producto final',
             'description' => 'Producto final',
         ]);
-        $objetoUsuario->save();
+        $tipoProducto->save();
     }
 }

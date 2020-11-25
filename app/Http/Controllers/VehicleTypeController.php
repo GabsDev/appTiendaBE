@@ -14,7 +14,14 @@ class VehicleTypeController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $vehicleType = VehicleType::orderBy('name', 'desc')->get();
+            $response = $vehicleType;
+
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

@@ -24,7 +24,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('total', 8, 2)->default(0)->nullable();
             #Foreign Key
             $table->unsignedInteger('client_id');
-            $table->unsignedInteger('salesMan_id');
+            $table->unsignedInteger('salesMan_id')->nullable();
             $table->unsignedInteger('dispatchMan_id')->nullable();
             $table->unsignedInteger('deliveryMan_id')->nullable();
             #created_at    updadted_at

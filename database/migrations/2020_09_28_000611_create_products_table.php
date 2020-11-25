@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->boolean('enable')->default(true);
             $table->string('image')->nullable();
             #Foreign Key
-            $table->unsignedInteger('productType_id');
+            $table->unsignedInteger('productType_id')->nullable();
             #created_at    updadted_at
             $table->timestamps();
             #Foreign Key Relationship

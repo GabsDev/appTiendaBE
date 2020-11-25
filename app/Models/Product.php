@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    public function producType()
+    public function productType()
     {
         return $this->belongsTo('App\Models\ProductType');
     }
